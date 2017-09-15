@@ -1,18 +1,3 @@
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-function showPosition(position) {
-    document.getElementById('longitude').value = position.coords.longitude;
-    document.getElementById('latitude').value = position.coords.latitude;
-
-}
-
 $(document).ready(function () {
     // variable buat button
     var $btnCalculate = $('#calculate');
@@ -35,8 +20,8 @@ $(document).ready(function () {
         end: function () {
             alert("end.");
         },
+        //event search location
         searchCoordinate: function () {
-            //getLocation();
             if (navigator.geolocation) { //check geolocation available 
                 //try to get user current location using getCurrentPosition() method
                 console.log("Browser support geolocation!");

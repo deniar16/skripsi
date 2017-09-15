@@ -43,7 +43,8 @@ $(document).ready(function () {
                         url: $url,
                         data: JSON.stringify(mapLocation),
                         success: function (data) {
-                            alert(data);
+                            alert("<td id=\""+data+"\" class=\"map-tile\" data-status=\"begin\"></td>");
+                            $("#"+data).replaceWith("<td id="+data+" class=\"map-tile\" data-status=\"begin\"></td>");
                         }
 
                     });

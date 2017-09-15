@@ -26,7 +26,7 @@ public class MeruyaMapRestController {
     public ResponseEntity<String> getCurrentLocation(@RequestBody
             MapLocation json) {
         System.out.println(json.getLatitude());
-        return new ResponseEntity<>("21312", HttpStatus.OK);
+        return new ResponseEntity<>("100", HttpStatus.OK);
     }
 
     private String convertToJsonData(Map map) throws IOException {

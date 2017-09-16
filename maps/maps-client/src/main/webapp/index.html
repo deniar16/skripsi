@@ -1,10 +1,1336 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<head>
+<title>A Star JavaScript Pathfinding Demo</title>
+<meta name="description"
+	content="An interactive demo and explanation of how the A Star pathfinding algorithm works.">
+<!--<meta http-equiv="refresh" content="5" />-->
+<link rel="stylesheet" type="text/css" href="resources/css/style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/prism.css">
+</head>
+<body>
+	<div class="wrapper">
+
+
+		<table class="map break alt">
+			<tr class="map-row">
+				<td id="1" class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td id="100" class="map-tile" data-status="begin"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile" data-status="closed"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+			<tr class="map-row">
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+				<td class="map-tile"></td>
+			</tr>
+
+
+
+		</table>
+
+		<div class="break">
+			<button id="calculate">Find Path</button>
+			<button id="start">Set Start</button>
+			<button id="end">Set End</button>
+			<button id="coordinate">Get Coordinate</button>
+			
+			
+			<!-- <button id="set-lv">Toggle Level</button>
+			<button id="erase">Clear Map</button>
+			<button id="set-gedung-O">Bisnis Centre</button> -->
+		</div>
+
+
+	</div>
+
+	<!-- Libs -->
+	<script type="text/javascript"
+		src="resources/js/libs/jquery-2.0.0.js"></script>
+	<script type="text/javascript" src="resources/js/libs/prism.js"></script>
+
+	<!-- Execution logic -->
+	<script type="text/javascript" src="resources/js/main.js"></script>
+</body>
 </html>

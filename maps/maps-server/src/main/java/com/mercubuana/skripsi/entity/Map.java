@@ -1,36 +1,47 @@
 package com.mercubuana.skripsi.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "map")
 public class Map {
+
+	public Map(){}
+
+	@Id
+	@Column(name = "id")
 	private Long id;
-	private String latitude;
-	private String longitude;
-	
-	
-	
-	public Map(Long id, String latitude, String longitude) {
-		super();
-		this.id = id;
-		this.latitude = latitude;
-		this.longitude = longitude;
-	}
+
+	@Column(name = "latitude")
+	private Double latitude;
+
+	@Column(name = "longitude")
+	private Double longitude;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getLatitude() {
+
+	public Double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(String latitude) {
+
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-	public String getLongitude() {
+
+	public Double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(String longitude) {
+
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
-	
 }

@@ -11,7 +11,7 @@ package com.mercubuana.skripsi.model;
  */
 public class MapLocation {
     public String latitude;
-    public String longitute;
+    public String longitude;
 
     public String getLatitude() {
         return latitude;
@@ -21,13 +21,11 @@ public class MapLocation {
         this.latitude = latitude;
     }
 
-    public String getLongitute() {
-        return longitute;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setLongitute(String longitute) {
-        this.longitute = longitute;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
-    
-    
 }

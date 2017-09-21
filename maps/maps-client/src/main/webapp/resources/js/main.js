@@ -44,7 +44,11 @@ $(document).ready(function () {
                         data: JSON.stringify(mapLocation),
                         success: function (data) {
                             alert("<td id=\""+data+"\" class=\"map-tile\" data-status=\"begin\"></td>");
-                            $("#"+data).replaceWith("<td id="+data+" class=\"map-tile\" data-status=\"begin\"></td>");
+                            if(data > 300 || data < 1){
+                                $("#1").replaceWith("<td id=1 class=\"map-tile\" data-status=\"begin\"></td>");
+                            }else{
+                                $("#"+data).replaceWith("<td id="+data+" class=\"map-tile\" data-status=\"begin\"></td>");
+                            }
                         }
 
                     });

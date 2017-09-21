@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Star JavaScript Pathfinding Demo</title>
+    <meta name="description"
+          content="An interactive demo and explanation of how the A Star pathfinding algorithm works.">
+    <!--<meta http-equiv="refresh" content="5" />-->
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/prism.css">
+</head>
+<body>
+<div class="wrapper">
+
+
+    <table class="map break alt">
+        <tr class="map-row">
+            <td id=1 class="map-tile"></td>
+            <td id=2 class="map-tile"></td>
+            <td id=3 class="map-tile"></td>
+            <td id=4 class="map-tile"></td>
+            <td id=5 class="map-tile"></td>
+            <td id=6 class="map-tile"></td>
+            <td id=7 class="map-tile"></td>
+            <td id=8 class="map-tile"></td>
+            <td id=9 class="map-tile"></td>
+            <td id=10 class="map-tile"></td>
+            <td id=11 class="map-tile"></td>
+            <td id=12 class="map-tile"></td>
+            <td id=13 class="map-tile"></td>
+            <td id=14 class="map-tile"></td>
+            <td id=15 class="map-tile"></td>
+            <td id=16 class="map-tile"></td>
+            <td id=17 class="map-tile"></td>
+            <td id=18 class="map-tile"></td>
+            <td id=19 class="map-tile"></td>
+            <td id=20 class="map-tile"></td>
+            <td id=21 class="map-tile"></td>
+            <td id=22 class="map-tile"></td>
+            <td id=23 class="map-tile"></td>
+            <td id=24 class="map-tile"></td>
+            <td id=25 class="map-tile"></td>
+            <td id=26 class="map-tile"></td>
+            <td id=27 class="map-tile"></td>
+            <td id=28 class="map-tile"></td>
+            <td id=29 class="map-tile"></td>
+            <td id=30 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=31 class="map-tile"></td>
+            <td id=32 class="map-tile"></td>
+            <td id=33 class="map-tile"></td>
+            <td id=34 class="map-tile"></td>
+            <td id=35 class="map-tile"></td>
+            <td id=36 class="map-tile"></td>
+            <td id=37 class="map-tile"></td>
+            <td id=38 class="map-tile"></td>
+            <td id=39 class="map-tile"></td>
+            <td id=40 class="map-tile"></td>
+            <td id=41 class="map-tile"></td>
+            <td id=42 class="map-tile"></td>
+            <td id=43 class="map-tile"></td>
+            <td id=44 class="map-tile"></td>
+            <td id=45 class="map-tile"></td>
+            <td id=46 class="map-tile"></td>
+            <td id=47 class="map-tile"></td>
+            <td id=48 class="map-tile"></td>
+            <td id=49 class="map-tile"></td>
+            <td id=50 class="map-tile"></td>
+            <td id=51 class="map-tile"></td>
+            <td id=52 class="map-tile"></td>
+            <td id=53 class="map-tile"></td>
+            <td id=54 class="map-tile"></td>
+            <td id=55 class="map-tile"></td>
+            <td id=56 class="map-tile"></td>
+            <td id=57 class="map-tile"></td>
+            <td id=58 class="map-tile"></td>
+            <td id=59 class="map-tile"></td>
+            <td id=60 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=61 class="map-tile"></td>
+            <td id=62 class="map-tile"></td>
+            <td id=63 class="map-tile"></td>
+            <td id=64 class="map-tile"></td>
+            <td id=65 class="map-tile"></td>
+            <td id=66 class="map-tile"></td>
+            <td id=67 class="map-tile"></td>
+            <td id=68 class="map-tile"></td>
+            <td id=69 class="map-tile"></td>
+            <td id=70 class="map-tile"></td>
+            <td id=71 class="map-tile"></td>
+            <td id=72 class="map-tile"></td>
+            <td id=73 class="map-tile"></td>
+            <td id=74 class="map-tile"></td>
+            <td id=75 class="map-tile"></td>
+            <td id=76 class="map-tile"></td>
+            <td id=77 class="map-tile"></td>
+            <td id=78 class="map-tile"></td>
+            <td id=79 class="map-tile"></td>
+            <td id=80 class="map-tile"></td>
+            <td id=81 class="map-tile"></td>
+            <td id=82 class="map-tile"></td>
+            <td id=83 class="map-tile"></td>
+            <td id=84 class="map-tile"></td>
+            <td id=85 class="map-tile"></td>
+            <td id=86 class="map-tile"></td>
+            <td id=87 class="map-tile"></td>
+            <td id=88 class="map-tile"></td>
+            <td id=89 class="map-tile"></td>
+            <td id=90 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=91 class="map-tile"></td>
+            <td id=92 class="map-tile"></td>
+            <td id=93 class="map-tile"></td>
+            <td id=94 class="map-tile"></td>
+            <td id=95 class="map-tile"></td>
+            <td id=96 class="map-tile"></td>
+            <td id=97 class="map-tile"></td>
+            <td id=98 class="map-tile"></td>
+            <td id=99 class="map-tile"></td>
+            <td id=100 class="map-tile"></td>
+            <td id=101 class="map-tile"></td>
+            <td id=102 class="map-tile"></td>
+            <td id=103 class="map-tile"></td>
+            <td id=104 class="map-tile"></td>
+            <td id=105 class="map-tile"></td>
+            <td id=106 class="map-tile"></td>
+            <td id=107 class="map-tile"></td>
+            <td id=108 class="map-tile"></td>
+            <td id=109 class="map-tile"></td>
+            <td id=110 class="map-tile"></td>
+            <td id=111 class="map-tile"></td>
+            <td id=112 class="map-tile"></td>
+            <td id=113 class="map-tile"></td>
+            <td id=114 class="map-tile"></td>
+            <td id=115 class="map-tile"></td>
+            <td id=116 class="map-tile"></td>
+            <td id=117 class="map-tile"></td>
+            <td id=118 class="map-tile"></td>
+            <td id=119 class="map-tile"></td>
+            <td id=120 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=121 class="map-tile"></td>
+            <td id=122 class="map-tile"></td>
+            <td id=123 class="map-tile"></td>
+            <td id=124 class="map-tile"></td>
+            <td id=125 class="map-tile"></td>
+            <td id=126 class="map-tile"></td>
+            <td id=127 class="map-tile"></td>
+            <td id=128 class="map-tile"></td>
+            <td id=129 class="map-tile"></td>
+            <td id=130 class="map-tile"></td>
+            <td id=131 class="map-tile"></td>
+            <td id=132 class="map-tile"></td>
+            <td id=133 class="map-tile"></td>
+            <td id=134 class="map-tile"></td>
+            <td id=135 class="map-tile"></td>
+            <td id=136 class="map-tile"></td>
+            <td id=137 class="map-tile"></td>
+            <td id=138 class="map-tile"></td>
+            <td id=139 class="map-tile"></td>
+            <td id=140 class="map-tile"></td>
+            <td id=141 class="map-tile"></td>
+            <td id=142 class="map-tile"></td>
+            <td id=143 class="map-tile"></td>
+            <td id=144 class="map-tile"></td>
+            <td id=145 class="map-tile"></td>
+            <td id=146 class="map-tile"></td>
+            <td id=147 class="map-tile"></td>
+            <td id=148 class="map-tile"></td>
+            <td id=149 class="map-tile"></td>
+            <td id=150 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=151 class="map-tile"></td>
+            <td id=152 class="map-tile"></td>
+            <td id=153 class="map-tile"></td>
+            <td id=154 class="map-tile"></td>
+            <td id=155 class="map-tile"></td>
+            <td id=156 class="map-tile"></td>
+            <td id=157 class="map-tile"></td>
+            <td id=158 class="map-tile"></td>
+            <td id=159 class="map-tile"></td>
+            <td id=160 class="map-tile"></td>
+            <td id=161 class="map-tile"></td>
+            <td id=162 class="map-tile"></td>
+            <td id=163 class="map-tile"></td>
+            <td id=164 class="map-tile"></td>
+            <td id=165 class="map-tile"></td>
+            <td id=166 class="map-tile"></td>
+            <td id=167 class="map-tile"></td>
+            <td id=168 class="map-tile"></td>
+            <td id=169 class="map-tile"></td>
+            <td id=170 class="map-tile"></td>
+            <td id=171 class="map-tile"></td>
+            <td id=172 class="map-tile"></td>
+            <td id=173 class="map-tile"></td>
+            <td id=174 class="map-tile"></td>
+            <td id=175 class="map-tile"></td>
+            <td id=176 class="map-tile"></td>
+            <td id=177 class="map-tile"></td>
+            <td id=178 class="map-tile"></td>
+            <td id=179 class="map-tile"></td>
+            <td id=180 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=181 class="map-tile"></td>
+            <td id=182 class="map-tile"></td>
+            <td id=183 class="map-tile"></td>
+            <td id=184 class="map-tile"></td>
+            <td id=185 class="map-tile"></td>
+            <td id=186 class="map-tile"></td>
+            <td id=187 class="map-tile"></td>
+            <td id=188 class="map-tile"></td>
+            <td id=189 class="map-tile"></td>
+            <td id=190 class="map-tile"></td>
+            <td id=191 class="map-tile"></td>
+            <td id=192 class="map-tile"></td>
+            <td id=193 class="map-tile"></td>
+            <td id=194 class="map-tile"></td>
+            <td id=195 class="map-tile"></td>
+            <td id=196 class="map-tile"></td>
+            <td id=197 class="map-tile"></td>
+            <td id=198 class="map-tile"></td>
+            <td id=199 class="map-tile"></td>
+            <td id=200 class="map-tile"></td>
+            <td id=201 class="map-tile"></td>
+            <td id=202 class="map-tile"></td>
+            <td id=203 class="map-tile"></td>
+            <td id=204 class="map-tile"></td>
+            <td id=205 class="map-tile"></td>
+            <td id=206 class="map-tile"></td>
+            <td id=207 class="map-tile"></td>
+            <td id=208 class="map-tile"></td>
+            <td id=209 class="map-tile"></td>
+            <td id=210 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=211 class="map-tile"></td>
+            <td id=212 class="map-tile"></td>
+            <td id=213 class="map-tile"></td>
+            <td id=214 class="map-tile"></td>
+            <td id=215 class="map-tile"></td>
+            <td id=216 class="map-tile"></td>
+            <td id=217 class="map-tile"></td>
+            <td id=218 class="map-tile"></td>
+            <td id=219 class="map-tile"></td>
+            <td id=220 class="map-tile"></td>
+            <td id=221 class="map-tile"></td>
+            <td id=222 class="map-tile"></td>
+            <td id=223 class="map-tile"></td>
+            <td id=224 class="map-tile"></td>
+            <td id=225 class="map-tile"></td>
+            <td id=226 class="map-tile"></td>
+            <td id=227 class="map-tile"></td>
+            <td id=228 class="map-tile"></td>
+            <td id=229 class="map-tile"></td>
+            <td id=230 class="map-tile"></td>
+            <td id=231 class="map-tile"></td>
+            <td id=232 class="map-tile"></td>
+            <td id=233 class="map-tile"></td>
+            <td id=234 class="map-tile"></td>
+            <td id=235 class="map-tile"></td>
+            <td id=236 class="map-tile"></td>
+            <td id=237 class="map-tile"></td>
+            <td id=238 class="map-tile"></td>
+            <td id=239 class="map-tile"></td>
+            <td id=240 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=241 class="map-tile"></td>
+            <td id=242 class="map-tile"></td>
+            <td id=243 class="map-tile"></td>
+            <td id=244 class="map-tile"></td>
+            <td id=245 class="map-tile"></td>
+            <td id=246 class="map-tile"></td>
+            <td id=247 class="map-tile"></td>
+            <td id=248 class="map-tile"></td>
+            <td id=249 class="map-tile"></td>
+            <td id=250 class="map-tile"></td>
+            <td id=251 class="map-tile"></td>
+            <td id=252 class="map-tile"></td>
+            <td id=253 class="map-tile"></td>
+            <td id=254 class="map-tile"></td>
+            <td id=255 class="map-tile"></td>
+            <td id=256 class="map-tile"></td>
+            <td id=257 class="map-tile"></td>
+            <td id=258 class="map-tile"></td>
+            <td id=259 class="map-tile"></td>
+            <td id=260 class="map-tile"></td>
+            <td id=261 class="map-tile"></td>
+            <td id=262 class="map-tile"></td>
+            <td id=263 class="map-tile"></td>
+            <td id=264 class="map-tile"></td>
+            <td id=265 class="map-tile"></td>
+            <td id=266 class="map-tile"></td>
+            <td id=267 class="map-tile"></td>
+            <td id=268 class="map-tile"></td>
+            <td id=269 class="map-tile"></td>
+            <td id=270 class="map-tile"></td>
+        </tr>
+        <tr class="map-row">
+            <td id=271 class="map-tile"></td>
+            <td id=272 class="map-tile"></td>
+            <td id=273 class="map-tile"></td>
+            <td id=274 class="map-tile"></td>
+            <td id=275 class="map-tile"></td>
+            <td id=276 class="map-tile"></td>
+            <td id=277 class="map-tile"></td>
+            <td id=278 class="map-tile"></td>
+            <td id=279 class="map-tile"></td>
+            <td id=280 class="map-tile"></td>
+            <td id=281 class="map-tile"></td>
+            <td id=282 class="map-tile"></td>
+            <td id=283 class="map-tile"></td>
+            <td id=284 class="map-tile"></td>
+            <td id=285 class="map-tile"></td>
+            <td id=286 class="map-tile"></td>
+            <td id=287 class="map-tile"></td>
+            <td id=288 class="map-tile"></td>
+            <td id=289 class="map-tile"></td>
+            <td id=290 class="map-tile"></td>
+            <td id=291 class="map-tile"></td>
+            <td id=292 class="map-tile"></td>
+            <td id=293 class="map-tile"></td>
+            <td id=294 class="map-tile"></td>
+            <td id=295 class="map-tile"></td>
+            <td id=296 class="map-tile"></td>
+            <td id=297 class="map-tile"></td>
+            <td id=298 class="map-tile"></td>
+            <td id=299 class="map-tile"></td>
+            <td id=300 class="map-tile"></td>
+        </tr>
+    </table>
+
+    <div class="break">
+        <button id="calculate">Find Path</button>
+        <button id="start">Set Start</button>
+        <button id="end">Set End</button>
+        <button id="coordinate">Update Lokasi</button>
+
+
+        <!-- <button id="set-lv">Toggle Level</button>
+        <button id="erase">Clear Map</button>
+        <button id="set-gedung-O">Bisnis Centre</button> -->
+    </div>
+    <input type="text" id="latitude" name="latitude"/>
+    <input type="text" id="longitude" name="latitude"/>
+
+
+</div>
+
+<!-- Libs -->
+<script type="text/javascript"
+        src="resources/js/libs/jquery-2.0.0.js"></script>
+<script type="text/javascript" src="resources/js/libs/prism.js"></script>
+
+<!-- Execution logic -->
+<script type="text/javascript" src="resources/js/main.js"></script>
+</body>
+</html>

@@ -2,6 +2,8 @@ package com.mercubuana.skripsi.controller;
 
 import java.io.IOException;
 
+import com.mercubuana.skripsi.repositories.MapRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,21 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 public class MeruyaMapRestController {
 
-//    @RequestMapping(value = "/rest/get_current_location", method = RequestMethod.GET)
-//    public @ResponseBody String getAllPeople() throws IOException, Exception {
-//    	
-//        String jsonData = convertToJsonData(new Map(1l, "123123123", "31312312231"));
-//        return jsonData;
-//    }
+    @Autowired
+    public MapRepository mapRepository;
+
     @RequestMapping(value = "/rest/get_current_location", method = RequestMethod.POST)
     public ResponseEntity<String> getCurrentLocation(@RequestBody
             MapLocation json) {
-        System.out.println(json.getLatitude());
-        return new ResponseEntity<>("100", HttpStatus.OK);
-    }
-
-    private String convertToJsonData(Map map) throws IOException {
-        Gson gson = new Gson();
-        return gson.toJson(map);
+        System.out.println(json.getLatitude() +", "+ json.getLongitude());
+        Map map = mapRepository.findByLatitudeAndLongitude(Double.valueOf(json.getLatitude()), Double.valueOf(json.getLongitude()));
+        if (map != null) {
+            return new ResponseEntity<>(map.getId().toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("-1", HttpStatus.OK);
+        }
     }
 }

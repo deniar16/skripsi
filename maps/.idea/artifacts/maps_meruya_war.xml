@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="maps-meruya:war">
+    <output-path>$PROJECT_DIR$/maps-server/target</output-path>
+    <root id="archive" name="maps-meruya-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="maps-meruya:war exploded" />
+    </root>
+  </artifact>
+</component>

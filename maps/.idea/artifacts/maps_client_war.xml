@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="maps-client:war">
+    <output-path>$PROJECT_DIR$/maps-client/target</output-path>
+    <root id="archive" name="maps-client-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="maps-client:war exploded" />
+    </root>
+  </artifact>
+</component>

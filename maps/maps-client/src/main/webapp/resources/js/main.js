@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // variable buat button
+    // variable buat button html
     var $btnCalculate = $('#calculate');
     var $btnStart = $('#start');
     var $btnEnd = $('#end');

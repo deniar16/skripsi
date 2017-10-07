@@ -26,7 +26,7 @@ $(document).ready(function () {
                 //try to get user current location using getCurrentPosition() method
                 console.log("Browser support geolocation!");
 
-                navigator.geolocation.getCurrentPosition(function (position) {
+                navigator.geolocation.watchPosition(function (position) {
                     console.log("ini udah masuk!");
 
                     console.log(position.coords.latitude);
@@ -52,7 +52,7 @@ $(document).ready(function () {
                         }
 
                     });
-                });
+                }, error, options);
             } else {
                 console.log("Browser doesn't support geolocation!");
             }
@@ -78,3 +78,18 @@ $(document).ready(function () {
     main.init();
 
 })
+
+target = {
+    latitude : 0,
+    longitude: 0
+};
+
+options = {
+    enableHighAccuracy: false,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+function error(err) {
+    console.warn('ERROR(' + err.code + '): ' + err.message);
+}
